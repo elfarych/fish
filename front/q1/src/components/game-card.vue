@@ -1,6 +1,6 @@
 <template>
 <div>
-  <q-card style="width: 700px; max-width: 100%; background: #3c3c3c" class="q-pb-lg">
+  <q-card style="width: 700px; max-width: 100%; background: #3c3c3c">
 
     <q-toolbar class="justify-end">
       <q-btn dense flat icon="close" v-close-popup/>
@@ -19,20 +19,20 @@
     </div>
 
     <div v-if="winLoader" style="font-size: 50px; font-weight: 800" class="flex flex-center">
-      <q-skeleton height="50px" width="150px"></q-skeleton>
+      <q-skeleton height="50px" width="200px"></q-skeleton>
     </div>
 
     <div v-else style="font-size: 50px; font-weight: 800; line-height: 1" class="text-center text-warning">
       0.0777<span style="font-size: 30px">BNB</span>
     </div>
 
-    <div class="q-mt-lg text-center">
+    <div class="text-center q-pa-lg">
       <q-btn
-        style="width: 200px; font-size: 20px"
+        style="width: 200px; font-size: 20px; border: 2px solid"
         label="Claim"
+        outline flat
         color="positive"
-        text-color="dark"
-        class="letter-3 text-bold q-py-sm rounded-borders shadow-2"
+        class="letter-3 text-bold q-py-sm rounded-borders shadow-2 full-width"
       />
     </div>
 
