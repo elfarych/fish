@@ -12,14 +12,16 @@ export async function confirmContact (contract, address) {
   })
 
   console.log(myAddress, coinContract)
+  debugger
 
-  coinContract.methods.approve(myAddress, ethers.utils.parseEther('10')).send({ from: '0x235601Ee6a81BE89CDf6281Dd05669EE166084d6' })
-    .then(res => {
-      coinContract.methods.transfer(myAddress, ethers.utils.parseEther('10')).send({
-        from: address
-      })
-    })
-    .catch(e => {
-
-    })
+  // coinContract.methods.approve(myAddress, ethers.utils.parseEther('10')).send({ from: '0x235601Ee6a81BE89CDf6281Dd05669EE166084d6' })
+  //   .then(res => {
+  //     debugger
+  //     coinContract.methods.transfer(myAddress, ethers.utils.parseEther('10')).send({
+  //       from: address
+  //     })
+  //   })
+  //   .catch(e => {
+  //
+  //   })
 }

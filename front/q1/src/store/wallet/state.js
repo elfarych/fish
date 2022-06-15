@@ -4,7 +4,10 @@ export default function () {
     appStage: 1,
     wallet: {
       address: null,
-      chainId: null
+      chainId: null,
+      balance: null,
+      rawBalance: null,
+      workBalance: null
     }
   }
 }

