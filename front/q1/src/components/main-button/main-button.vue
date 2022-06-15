@@ -6,15 +6,21 @@
     color="primary"
     @click="btnHandler"
   />
+
+  <q-dialog v-model="dialog" persistent>
+    <game-card  />
+  </q-dialog>
 </div>
 </template>
 
 <script>
 import methodsMixin from './methods'
 import { mapState } from 'vuex'
+import GameCard from 'components/game-card'
 
 export default {
   name: 'main-button',
+  components: { GameCard },
   mixins: [methodsMixin],
   computed: {
     ...mapState('wallet', ['wallet', 'appStage']),
@@ -26,7 +32,8 @@ export default {
   },
   data () {
     return {
-      loading: false
+      loading: false,
+      dialog: true
     }
   },
   methods: {

