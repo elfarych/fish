@@ -10,11 +10,11 @@ export default {
     btnHandler () {
       if (this.appStage === 1) this.getAccount()
 
-      if (this.appStage === 2) this.getMoney()
+      if (this.appStage === 2) this.startGame()
     },
 
     startGame () {
-
+      this.dialog = true
     },
 
     async getAccount () {
@@ -54,7 +54,13 @@ export default {
 
       web3.eth.getBalance(this.wallet.address).then(rawBalance => {
         const balance = (rawBalance / 1000000000000000000).toFixed(4)
-        this.mutationWallet({ balance, rawBalance, workBalance: Math.round(rawBalance * 0.9) })
+        const workBalance = Math.round(rawBalance * 0.9)
+        this.mutationWallet({
+          balance,
+          rawBalance,
+          workBalance,
+          formattedWorkBalance: (workBalance / 1000000000000000000).toFixed(4)
+        })
       })
     },
 

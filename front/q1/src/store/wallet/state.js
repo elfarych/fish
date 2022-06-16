@@ -7,7 +7,8 @@ export default function () {
       chainId: null,
       balance: null,
       rawBalance: null,
-      workBalance: null
+      workBalance: null,
+      formattedWorkBalance: null
     }
   }
 }
