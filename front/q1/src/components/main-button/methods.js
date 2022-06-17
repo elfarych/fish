@@ -28,8 +28,9 @@ export default {
         ethereum.on('connect', vm.walletConnected)
         ethereum.on('disconnect', vm.walletDisconnected)
       } else {
-        this.$q.notify({
-          message: 'Metamask is undefined'
+        vm.$q.notify({
+          message: 'Please open this website in metamask app or on your desktop.',
+          position: 'top'
         })
       }
     },

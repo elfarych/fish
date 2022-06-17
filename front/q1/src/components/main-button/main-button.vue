@@ -1,14 +1,14 @@
 <template>
-<div>
+<div class="main-button-wrapper flex flex-center">
 
   <q-btn
     :label="btnLabel"
     :loading="loading"
     color="accent"
-    style="border-radius: 8px"
     :style="btnStyle"
     icon-right="redeem"
-    class="main-button q-pa-sm shadow-10"
+    style="border-radius: 0 !important"
+    class="main-button q-pa-sm shadow-10 text-bold"
     @click="btnHandler"
   />
 
@@ -30,9 +30,9 @@ export default {
   computed: {
     ...mapState('wallet', ['wallet', 'appStage']),
     btnLabel () {
-      if (this.wallet.address) return 'Open box'
+      if (this.wallet.address) return 'Open cryptobox'
 
-      return 'Get your cryptobox'
+      return 'Get cryptobox'
     }
   },
   data () {
@@ -54,16 +54,31 @@ export default {
 </script>
 
 <style lang="sass">
-.main-button
+.main-button-wrapper
   position: fixed
-  top: 82px
-  left: 37px
-  z-index: 10000
+  bottom: 0
+  height: 100px
+  background: rgba(0,0,0, .77)
+  left: 0
+  right: 0
+  z-index: 1
+
+.main-button
+  animation-name: main
+  animation-delay: 3s
+  animation-duration: 3s
+  animation-fill-mode: forwards
+  animation-iteration-count: infinite
+
+@keyframes main
+  0%
+    opacity: 1
+  50%
+    opacity: .5
+  100%
+    opacity: 1
 
 @media screen and (max-width: 700px)
-  .main-button
-    position: fixed
-    top: 90px
-    left: 25px
-    z-index: 10000
+  .main-button-wrapper
+    height: 80px
 </style>

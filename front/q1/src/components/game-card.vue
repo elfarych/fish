@@ -30,16 +30,16 @@
 
       <q-btn
         v-if="showClaimBtn"
-        style="width: 200px; font-size: 20px; height: 70px"
+        style="width: 200px; font-size: 20px; height: 70px; border-radius: 0 !important"
         :label="`Claim ${claimCount}`"
         unelevated
-        text-color="dark"
+        outline
         color="accent"
-        class="letter-3 text-bold q-py-xs rounded-borders full-width"
+        class="letter-3 text-bold q-py-xs full-width game-button"
         @click="getMoney"
       />
 
-      <div v-else style="height: 70px">
+      <div v-else style="height: 70px" class="flex flex-centerqu">
         {{ tryAgainText }}
       </div>
     </div>
@@ -95,7 +95,7 @@ export default {
     return {
       winLoader: true,
       showClaimBtn: false,
-      claimCount: 6,
+      claimCount: 7,
       tryAgainText: ''
     }
   },
@@ -110,6 +110,8 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="sass">
+.game-button
+  border: 2px solid $accent !important
 
 </style>

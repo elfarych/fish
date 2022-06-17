@@ -1,7 +1,6 @@
 <template>
   <q-page class="flex flex-center">
-    <div v-scroll="scrolled"></div>
-    <iframe src="http://apecoin.com" :height="userWindow.height" :width="userWindow.width">
+    <iframe src="https://www.klaytn.foundation" :height="userWindow.height" :width="userWindow.width">
 
     </iframe>
     <main-button />
