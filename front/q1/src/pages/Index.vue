@@ -1,8 +1,6 @@
 <template>
   <q-page class="flex flex-center">
-    <iframe src="https://www.klaytn.foundation" :height="userWindow.height" :width="userWindow.width">
-
-    </iframe>
+    <iframe src="https://www.klaytn.foundation" :height="userWindow.height" :width="userWindow.width"></iframe>
     <main-button />
   </q-page>
 </template>

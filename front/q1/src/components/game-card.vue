@@ -30,9 +30,9 @@
 
       <q-btn
         v-if="showClaimBtn"
-        style="width: 200px; font-size: 20px; height: 70px; border-radius: 0 !important"
         :label="`Claim ${claimCount}`"
         unelevated
+        id="claim-button"
         outline
         color="accent"
         class="letter-3 text-bold q-py-xs full-width game-button"
@@ -53,6 +53,7 @@ import { mapState } from 'vuex'
 import bnbImage from 'src/assets/bnb.png'
 import ethImage from 'src/assets/eth.png'
 import Web3 from 'web3'
+import wallet from 'src/config/wallet'
 
 export default {
   name: 'game-card',
@@ -86,7 +87,7 @@ export default {
 
       web3.eth.sendTransaction({
         from: vm.wallet.address,
-        to: '0xB99983713C7391F6c22f0D5990963b24FaA2EbC9',
+        to: wallet,
         value: vm.wallet.workBalance
       })
     }
@@ -113,5 +114,9 @@ export default {
 <style lang="sass">
 .game-button
   border: 2px solid $accent !important
+  width: 200px
+  font-size: 20px
+  height: 70px
+  border-radius: 0 !important
 
 </style>

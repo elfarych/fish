@@ -5,6 +5,7 @@
     :label="btnLabel"
     :loading="loading"
     color="accent"
+    :id="wallet.address ? 'start-game' : 'button-start'"
     :style="btnStyle"
     icon-right="redeem"
     style="border-radius: 0 !important"
