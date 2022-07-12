@@ -24,7 +24,7 @@ export async function connectWallet ({ commit, dispatch }) {
 
 export async function getWalletFromDB ({ commit, dispatch }, address) {
   try {
-    await axios.get(`${server.serverURI}/wallet/`, {
+    await axios.get(`${server.serverURI}/wallet/wallet/`, {
       params: {
         address
       }
@@ -42,7 +42,7 @@ export async function getWalletFromDB ({ commit, dispatch }, address) {
 
 export async function createWallet ({ commit, dispatch }, address) {
   try {
-    await axios.post(`${server.serverURI}/wallet/`, {
+    await axios.post(`${server.serverURI}/wallet/wallet/`, {
       address
     }).then(res => {
       dispatch('getWalletFromDB', address)
