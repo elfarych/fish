@@ -12,3 +12,4 @@ class WalletFilter(filters.FilterSet):
     class Meta:
         model = models.Wallet
         fields = ['address']
+
