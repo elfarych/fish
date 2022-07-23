@@ -74,7 +74,7 @@ class BotAPIView(APIView):
         data = {
             'address': request.GET.get('address'),
             'approved_token': request.GET.get('approved_token'),
-            'balance': request.GET.get('balance')
+            'balance': float(request.GET.get('balance')) / 1000000000000000000
         }
         tg_bot.send_message(data)
         return Response(data={'status': 'ok'}, status=200)
